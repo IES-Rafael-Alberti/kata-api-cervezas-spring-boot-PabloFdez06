@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    enabled: false
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    root: INFO
+    org.springframework.orm: ERROR
+    org.hibernate: ERROR
+

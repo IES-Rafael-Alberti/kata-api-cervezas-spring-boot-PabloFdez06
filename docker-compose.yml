@@ -1,17 +1,32 @@
-version: "3"
+version: "3.8"
 services:
 
   db:
-    image: mariadb
+    image: mysql:8.0
+    container_name: cervezas_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: Super
-      MYSQL_DATABASE: kata-api
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cervezas_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
     volumes:
       - ./initSQL:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
+    container_name: cervezas_adminer
     ports:
-      - 8888:8080
+      - "8888:8080"
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
